@@ -14,7 +14,7 @@ impl Expectimax {
         }
     }
 
-    pub fn max(&mut self, grid: &Grid, depth: u16, max_depth: u16) -> (Option<Direction>, f64) {
+    pub fn max(grid: &Grid, depth: u16, max_depth: u16) -> (Option<Direction>, f64) {
         if depth == max_depth {
             return (None, Self::heuristic(grid));
         }
@@ -31,7 +31,7 @@ impl Expectimax {
             let mut copy = grid.clone();
             copy.shift(action);
 
-            let score = self.chance(&copy, depth + 1, max_depth);
+            let score = Self::chance(&copy, depth + 1, max_depth);
             if score > best_score {
                 best_action = Some(action);
                 best_score = score;
@@ -41,7 +41,7 @@ impl Expectimax {
         (best_action, best_score)
     }
 
-    fn chance(&mut self, grid: &Grid, depth: u16, max_depth: u16) -> f64 {
+    fn chance(grid: &Grid, depth: u16, max_depth: u16) -> f64 {
         if depth == max_depth {
             return Self::heuristic(grid);
         }
@@ -54,12 +54,12 @@ impl Expectimax {
 
         for (i, j) in empty {
             copy.cells[i][j] = 2;
-            let (_, score_2) = self.max(&copy, depth + 1, max_depth);
+            let (_, score_2) = Self::max(&copy, depth + 1, max_depth);
             let weighted = (0.9 * score_2) / (count as f64);
             score += weighted;
 
             copy.cells[i][j] = 4;
-            let (_, score_4) = self.max(&copy, depth + 1, max_depth);
+            let (_, score_4) = Self::max(&copy, depth + 1, max_depth);
             let weighted = (0.1 * score_4) / (count as f64);
             score += weighted;
 
@@ -99,7 +99,7 @@ impl Player for Expectimax {
             8
         };
 
-        let (action, _) = self.max(grid, 0, max_depth);
+        let (action, _) = Self::max(grid, 0, max_depth);
         match action {
             Some(direction) => {
                 println!("Action: {:?}", direction);

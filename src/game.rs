@@ -76,6 +76,7 @@ where
                 Status::Exit => break,
                 Status::GameOver => {
                     let padding = self.separator.len() - 2;
+                    self.render();
                     println!("\n{}", self.separator);
                     println!("|{: ^padding$}|", "Game Over", padding=padding);
                     println!("{}", self.separator);
