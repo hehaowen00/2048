@@ -6,6 +6,12 @@ pub trait Player {
     fn next_action(&mut self, grid: &Grid) -> Option<Action>;
 }
 
+impl Player for Box<dyn Player> {
+    fn next_action(&mut self, grid: &Grid) -> Option<Action> {
+        (**self).next_action(grid) 
+    }
+}
+
 #[derive(Debug)]
 pub struct Human {
     buffer: String,
@@ -20,7 +26,7 @@ impl Human {
 }
 
 impl Player for Human {
-    fn next_action(&mut self, grid: &Grid) -> Option<Action> {
+    fn next_action(&mut self, _grid: &Grid) -> Option<Action> {
         print!("Action: ");
         let _ = stdout().flush();
         let _ =  stdin().read_line(&mut self.buffer);

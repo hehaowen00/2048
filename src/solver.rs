@@ -4,13 +4,11 @@ use crate::player::Player;
 use crate::util::dot_product;
 
 pub struct Expectimax {
-    stack: Vec<Grid>,
 }
 
 impl Expectimax {
     pub fn new() -> Self {
         Self {
-            stack: Vec::new(),
         }
     }
 

@@ -1,5 +1,5 @@
 use crate::action::Direction;
-use crate::util::{WIDTH, dot_product, reverse, transpose};
+use crate::util::{WIDTH, reverse, transpose};
 use rand::prelude::*;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
