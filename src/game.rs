@@ -105,11 +105,17 @@ where
         let spacing = self.separator.len() - TITLE_LEN - SCORE_LEN;
         write!(f, "\n[2048]{:spacing$}Score:{:10}", "", self.score, spacing=spacing)?;
 
+        let mut empty_cell = " ".repeat(CELL_WIDTH);
+        empty_cell.push('|');
+
         for i in 0..WIDTH {
             write!(f, "\n{}\n|", self.separator)?;
 
             for j in 0..WIDTH {
-                write!(f, "{: ^padding$}|", self.grid[(i,j)], padding=CELL_WIDTH)?;
+                match self.grid[(i,j)] {
+                    0 => write!(f, "{}", empty_cell)?,
+                    x =>  write!(f, "{: ^padding$}|", x, padding=CELL_WIDTH)?,
+                }
             }
         }
 
